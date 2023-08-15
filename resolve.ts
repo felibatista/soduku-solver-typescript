@@ -1,4 +1,4 @@
-import { findInRow } from "./src/controller/SodukuController";
+import { findNumberInRow } from "./src/controller/SodukuController";
 import Cube from "./src/entity/Cube";
 import Soduku from "./src/entity/Soduku";
 
@@ -8,4 +8,4 @@ console.log(soduku.getCubes().forEach((cube:Cube) => {
     console.log(cube.getId(), cube.getCells());
 }));
 
-findInRow(soduku, 1, 2);
+console.log(findNumberInRow(soduku, 1, 2));

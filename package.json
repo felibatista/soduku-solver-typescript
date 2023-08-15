@@ -6,7 +6,8 @@
     "commander": "^11.0.0",
     "figlet": "^1.6.0",
     "jsdom": "^22.1.0",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "ts-node": "^10.9.1"
   },
   "scripts": {
     "build": "ts-node ./main.ts",

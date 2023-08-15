@@ -10,20 +10,29 @@ function getCubesFromGrandRow(soduku:Soduku, grandRow:number): Cube[] {
     });
 }
 
-export function findInRow(sodoku:Soduku, numberToFind:number, row:number ): boolean {
+export function findNumberInRow(sodoku:Soduku, numberToFind:number, row:number ): [boolean, Cell | null] {
     const grandRow = getGrandRowByRow(sodoku, row);
     const cubesInGrandRow:Cube[] = getCubesFromGrandRow(sodoku, grandRow);
 
-    range(1, cubesInGrandRow.length).forEach((cubeId) =>
-        range(1, 3).forEach((cellX) => {
+    let lastCellFound:Cell | null = null;
+    let found:boolean = false;
+
+    for (let cubeId = 1; cubeId <= cubesInGrandRow.length; cubeId++){
+        for (let cellX = 1; cellX <= 3; cellX++){
             const cubeFound:Cube = sodoku.getCubes().filter((cubeUnique:Cube) => cubeUnique.getId() == cubeId)[0];
             const cellFound:Cell = cubeFound.getCells().filter((cellUnique:Cell) => cellUnique.getY() === cellX)[0];
+            const valueFound:number = cellFound.getValue()
+        
+            if (valueFound === numberToFind){
+                lastCellFound = cellFound;
+                found = true;
+                
+                break;
+            }
+        }
+    }
 
-            console.log("El valor de Y - X:", getYFromRow(sodoku, row), cellX, "se encuentra en el cubo ID: ", cubeFound.getId(), "con valor de:", cellFound.getValue())
-        })
-    )
-
-    return false
+    return [found, lastCellFound]
 }
 
 function getYFromRow(sodoku:Soduku, row:number):number{
@@ -36,28 +45,17 @@ function getGrandRowByRow(soduku:Soduku, row:number): number {
     const large = Soduku.getNumberDivisibleTable(soduku.getSize());
 
     let rows:any[] = [];
-    let counter = 1
+    let grandRow = 1
 
-    range(1, soduku.getSize()).forEach((rowNumber:number) => {
-        rows.push(
-            {rowNumber: rowNumber, grandRow: counter}
-        );
-
+    for (let rowNumber = 1; rowNumber < soduku.getSize(), rowNumber++;){
         if (rowNumber % large === 0) {
-            counter += 1
+            grandRow += 1
         }
-    })
-
-    let cubeNumber = 0
-
-    rows.forEach(r => {
-        const rowNumber = r.rowNumber
-        const rowCube = r.grandRow
-
-        if (rowNumber === row) {
-            cubeNumber = rowCube;
+    
+        if (rowNumber === row){
+            break;
         }
-    });
+    }
 
-    return cubeNumber
+    return grandRow;
 }
