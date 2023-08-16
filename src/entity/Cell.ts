@@ -1,12 +1,14 @@
 export default class Cell {
     private x:number;
     private y:number;
-    private value:number;
+    private value:any;
+    private cubeId:number;
 
-    constructor(x:number, y:number) {
+    constructor(x:number, y:number, cubeId:number, value:any=0) {
         this.x = x;
         this.y = y;
-        this.value = 0
+        this.cubeId = cubeId;
+        this.value = value
     }
 
     public getX(): number {
@@ -17,11 +19,15 @@ export default class Cell {
         return this.y;
     }
 
-    public setValue(value:number) {
+    public getCubeId(): number {
+        return this.cubeId;
+    }
+
+    public setValue(value:any) {
         this.value = value;
     }
 
-    public getValue():number{
+    public getValue():any{
         return this.value;
     }
 }
