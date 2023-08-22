@@ -17,10 +17,11 @@ export function addNumber(sodoku:Sodoku, cubeId:number, x:number, y:number, valu
 }
 
 export function resolve(sodoku:Sodoku):Sodoku{
-    addNumber(sodoku, 1, 1, 1, 1);
-    addNumber(sodoku, 1, 2, 1, 2);
+    addNumber(sodoku, 2, 1, 1, 1);
+    addNumber(sodoku, 6, 2, 1, 2);
+    
+    //sodoku.getCubes().forEach(cube => { console.log("CUBO #" + cube.getId() + ":", cube.getEntrys()) });
 
-    sodoku.getCubes().forEach(cube => { console.log("CUBO #" + cube.getId() + ":", cube.getEntrys()) });
     const possibleEntrysLength:number = sodoku.getSize()
 
     let maxY:number = sodoku.getCubeColumnLength() * sodoku.getCubesFromGrandRow(1).length;
@@ -50,33 +51,22 @@ export function resolve(sodoku:Sodoku):Sodoku{
 
                     if (sodoku.isSafeLocation(cell, entry)){               
                         cell.setValue(entry);
-                        console.log("Cubo #" + cell.getCubeId() + " - X:", xInCube, "Y:", yInCube, "- NUEVO VALOR:", entry);
+                        copyEntrys.push({step:counterSteps, entrys:sodoku.getCubes().map(cube => cube.getEntrys()).flat()});
+                        //console.log("Cubo #" + cell.getCubeId() + " - X:", xInCube, "Y:", yInCube, "- NUEVO VALOR:", entry);
                         break;
                     }else{
-                        console.log("Cubo #" + cell.getCubeId() + " - X:", xInCube, "Y:", yInCube, "- NO PASO EL VALOR:", entry);
-
+                        //console.log("Cubo #" + cell.getCubeId() + " - X:", xInCube, "Y:", yInCube, "- NO PASO EL VALOR:", entry);
                     }
-
                 }
 
-                
-                /*    for (let possibleEntry = 1; possibleEntry <= possibleEntrysLength; possibleEntry++) {
-                        console.log("Cubo #" + cube.getId() + " - X:", xInCube, "Y:", yInCube, "- value:", possibleEntry);
-
-                        copyEntrys.push({step:counterSteps, entrys:sodoku.getCubes().map(cube => cube.getEntrys()).flat()});
-
-                        break;
-                    }else{
-                       // console.log("No pasa")
-                    }
-                }*/
-                
-                //console.log("Cubo #" + cube.getId() + " - X:", xInCube, "Y:", yInCube, "- value:", cell.getValue());
+                //check again is value is 0
             }
         }
     }
 
-    //console.log(copyEntrys)
+
+
+    console.log(copyEntrys)
 
 
     return sodoku;

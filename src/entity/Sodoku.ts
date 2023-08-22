@@ -1,3 +1,4 @@
+import { is } from "cheerio/lib/api/traversing";
 import Cell from "./Cell";
 import Cube from "./Cube";
 
@@ -123,21 +124,21 @@ export default class Sodoku {
     public isSafeLocation(cell:Cell, entryToFind:any):boolean{
         const x = cell.getX();
         const y = cell.getY();
+
+        let isSafeLocation:boolean = true;
         
         const cubeCell:Cube = this.getCubes().find((cube:Cube) => cell.getCubeId() === cube.getId())!;
 
         //check cube
         if (cubeCell?.containsEntry(entryToFind)){
-            return false;
+            isSafeLocation = false;
         }
 
         //check column
         this.getCubesFromGrandColumn(this.getGrandColumnByCube(cubeCell)).forEach((cube:Cube) => {
             for (let a = 1; a <= this.cubeRowLength; a++){
                 if (cube.getCellByPosition(a, y)?.getValue() == entryToFind){
-                    console.log("FALSE")
-                    console.log("GRAND COLUMN CHECK FOR (",entryToFind,"): CUBO #", cube.getId(), " X:", a, " Y:",y, " value:", cube.getCellByPosition(a, y)?.getValue())
-                    return false;
+                    isSafeLocation = false;
                 }
             }
         });
@@ -145,16 +146,13 @@ export default class Sodoku {
         //check row
         this.getCubesFromGrandRow(this.getGrandRowByCube(cubeCell)).forEach((cube:Cube) => {
             for (let a = 1; a <= this.cubeColumnLength; a++){
-                //console.log("GRAND ROW CHECK FOR (",entryToFind,"): CUBO #", cube.getId(), " X:", a, " Y:",y, " value:", cube.getCellByPosition(a, y)?.getValue())
-
                 if (cube.getCellByPosition(x, a)?.getValue() == entryToFind){
-                //    console.log("FALSE")
-                    return false;
+                    isSafeLocation = false;
                 }
             }
         });
 
-        return true;
+        return isSafeLocation;
     }
 
 
