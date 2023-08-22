@@ -35,8 +35,6 @@ export default class Cube {
                 }
             }
         }
-
-        console.log("CUBO #" + this.id + ":", this.getEntrys())
     }
     
     public getCells(): Cell[] {

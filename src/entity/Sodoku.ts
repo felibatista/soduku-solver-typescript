@@ -121,8 +121,6 @@ export default class Sodoku {
     }
 
     public isSafeLocation(cell:Cell, entryToFind:any):boolean{
-        const cellValue:number = cell.getValue();
-
         const x = cell.getX();
         const y = cell.getY();
         
@@ -136,7 +134,9 @@ export default class Sodoku {
         //check column
         this.getCubesFromGrandColumn(this.getGrandColumnByCube(cubeCell)).forEach((cube:Cube) => {
             for (let a = 1; a <= this.cubeRowLength; a++){
-                if (cube.getCellByPosition(x, a)?.getValue() === entryToFind){
+                if (cube.getCellByPosition(a, y)?.getValue() == entryToFind){
+                    console.log("FALSE")
+                    console.log("GRAND COLUMN CHECK FOR (",entryToFind,"): CUBO #", cube.getId(), " X:", a, " Y:",y, " value:", cube.getCellByPosition(a, y)?.getValue())
                     return false;
                 }
             }
@@ -145,7 +145,10 @@ export default class Sodoku {
         //check row
         this.getCubesFromGrandRow(this.getGrandRowByCube(cubeCell)).forEach((cube:Cube) => {
             for (let a = 1; a <= this.cubeColumnLength; a++){
-                if (cube.getCellByPosition(a, y)?.getValue() === entryToFind){
+                //console.log("GRAND ROW CHECK FOR (",entryToFind,"): CUBO #", cube.getId(), " X:", a, " Y:",y, " value:", cube.getCellByPosition(a, y)?.getValue())
+
+                if (cube.getCellByPosition(x, a)?.getValue() == entryToFind){
+                //    console.log("FALSE")
                     return false;
                 }
             }
