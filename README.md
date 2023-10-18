@@ -18,7 +18,7 @@ Step 2️⃣
 ## Define the Sudoku board (0 for empty cells)
 sudoku_board = [
     [5, 3, 0, 0, 7, 0, 0, 0, 0],
-    # ... (resto del tablero)
+    # ... (rest of the board)
 ]
 
 ## Call solve sudoku function
